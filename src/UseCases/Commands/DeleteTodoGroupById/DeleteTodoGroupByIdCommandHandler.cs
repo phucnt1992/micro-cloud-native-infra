@@ -6,9 +6,9 @@ using MicroTodo.Infra.Persistence;
 namespace MicroTodo.UseCases.Commands;
 public class DeleteTodoGroupByIdCommandHandler : IRequestHandler<DeleteTodoGroupByIdCommand>
 {
-    private readonly IMicroTodoDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public DeleteTodoGroupByIdCommandHandler(IMicroTodoDbContext dbContext)
+    public DeleteTodoGroupByIdCommandHandler(IApplicationDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(dbContext);
 

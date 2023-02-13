@@ -10,7 +10,12 @@
         "**/bin": true,
         "**/obj": true,
     },
+    "cucumber.glue": [
+        "**/*Steps.cs",
+    ],
     "cSpell.words": [
-        "Mediat"
-    ]
+        "Mediat",
+        "msbuild",
+        "Xunit"
+    ],
 }

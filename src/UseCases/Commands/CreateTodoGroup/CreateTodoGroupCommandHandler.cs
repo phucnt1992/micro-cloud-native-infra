@@ -4,9 +4,9 @@ namespace MicroTodo.UseCases.Commands;
 
 public class CreateTodoGroupCommandHandler : IRequestHandler<CreateTodoGroupCommand, long>
 {
-    private readonly IMicroTodoDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public CreateTodoGroupCommandHandler(IMicroTodoDbContext dbContext)
+    public CreateTodoGroupCommandHandler(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }

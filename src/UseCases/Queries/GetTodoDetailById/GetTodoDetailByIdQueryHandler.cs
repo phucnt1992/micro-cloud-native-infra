@@ -6,9 +6,9 @@ namespace MicroTodo.UseCases.Queries;
 
 public class GetTodoDetailByIdQueryHandler : IRequestHandler<GetTodoDetailByIdQuery, TodoEntity>
 {
-    private readonly IMicroTodoDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public GetTodoDetailByIdQueryHandler(IMicroTodoDbContext dbContext)
+    public GetTodoDetailByIdQueryHandler(IApplicationDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(dbContext);
 

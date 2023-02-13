@@ -16,13 +16,11 @@ abstract class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> wh
 
         builder.Property(x => x.CreatedOn)
             .HasColumnName("created_on")
-            .HasColumnType("timestamp")
-            .HasDefaultValueSql("timezone('utc', now())");
+            .HasDefaultValue(DateTime.UtcNow);
 
         builder.Property(x => x.ModifiedOn)
             .HasColumnName("modified_on")
-            .HasColumnType("timestamp")
-            .HasDefaultValueSql("timezone('utc', now())");
+            .HasDefaultValue(DateTime.UtcNow);
 
         builder.Property(x => x.Version)
             .HasColumnName("version")

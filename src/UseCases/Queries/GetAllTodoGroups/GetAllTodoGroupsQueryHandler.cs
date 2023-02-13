@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using MicroTodo.Infra.Persistence;
 public class GetTodoGroupQueryHandler : IRequestHandler<GetAllTodoGroupsQuery, IEnumerable<TodoGroupEntity>>
 {
-    private readonly IMicroTodoDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public GetTodoGroupQueryHandler(IMicroTodoDbContext dbContext)
+    public GetTodoGroupQueryHandler(IApplicationDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(dbContext);
 

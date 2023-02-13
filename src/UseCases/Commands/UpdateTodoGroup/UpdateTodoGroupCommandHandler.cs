@@ -7,9 +7,9 @@ namespace MicroTodo.UseCases.Commands;
 
 public class UpdateTodoGroupCommandHandler : IRequestHandler<UpdateTodoGroupCommand, TodoGroupEntity>
 {
-    private readonly IMicroTodoDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public UpdateTodoGroupCommandHandler(IMicroTodoDbContext dbContext)
+    public UpdateTodoGroupCommandHandler(IApplicationDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(dbContext);
         _dbContext = dbContext;

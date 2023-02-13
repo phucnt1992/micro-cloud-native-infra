@@ -4,9 +4,9 @@ namespace MicroTodo.UseCases.Commands;
 
 class CreateTodoCommandHandler : IRequestHandler<CreateTodoCommand, long>
 {
-    private readonly IMicroTodoDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public CreateTodoCommandHandler(IMicroTodoDbContext dbContext)
+    public CreateTodoCommandHandler(IApplicationDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(dbContext);
 

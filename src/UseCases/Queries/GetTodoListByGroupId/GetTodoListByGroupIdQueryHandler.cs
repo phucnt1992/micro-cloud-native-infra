@@ -6,9 +6,9 @@ namespace MicroTodo.UseCases.Queries;
 
 public class GetTodoListByGroupIdQueryHandler : IRequestHandler<GetTodoListByGroupIdQuery, IEnumerable<TodoEntity>>
 {
-    private readonly IMicroTodoDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public GetTodoListByGroupIdQueryHandler(IMicroTodoDbContext dbContext)
+    public GetTodoListByGroupIdQueryHandler(IApplicationDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(dbContext);
 

@@ -20,7 +20,6 @@ class TodoConfiguration : BaseConfiguration<TodoEntity>, IEntityTypeConfiguratio
             .IsRequired();
 
         builder.Property(x => x.DueDate)
-            .HasColumnType("timestamp")
             .HasColumnName("due_date");
     }
 }

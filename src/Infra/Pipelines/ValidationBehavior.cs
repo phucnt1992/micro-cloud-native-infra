@@ -22,15 +22,18 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
         {
             var context = new ValidationContext<TRequest>(request);
 
-            var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+            var validationResults = await Task
+                .WhenAll(_validators
+                    .Select(v => v
+                        .ValidateAsync(context, cancellationToken)));
 
             var failures = validationResults
-                .Where(x => x.Errors!.Any() == true)
+                .Where(x => x.Errors!.Any())
                 .SelectMany(r => r.Errors)
                 .ToList();
 
             if (failures.Any())
-                throw new FluentValidation.ValidationException(failures);
+                throw new ValidationException(failures);
         }
 
         return await next();
