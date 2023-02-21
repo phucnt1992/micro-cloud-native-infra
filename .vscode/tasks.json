@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/tests/IntegrationTests/MicroTodo.IntegrationTests.csproj",
+                "${workspaceFolder}/MicroTodo.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/tests/IntegrationTests/MicroTodo.IntegrationTests.csproj",
+                "${workspaceFolder}/MicroTodo.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,9 +33,33 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/tests/IntegrationTests/MicroTodo.IntegrationTests.csproj"
+                "${workspaceFolder}/MicroTodo.sln"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "${workspaceFolder}/MicroTodo.sln",
+                "--no-build",
+                "--no-restore",
+                "--collect:\"XPlat Code Coverage\""
+            ],
+        },
+        {
+            "label": "test:msbuild",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "${workspaceFolder}/MicroTodo.sln",
+                "--no-build",
+                "--no-restore",
+                "/p:CollectCoverage=true"
+            ],
         }
     ]
 }

@@ -351,3 +351,4 @@ MigrationBackup/
 
 # Specflow test files
 *.feature.cs
+coverage.json

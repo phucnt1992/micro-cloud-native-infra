@@ -1,4 +1,4 @@
-Feature: Get All Todo Group Endpoint
+Feature: Get all todo group endpoint
     As an end user
     I want to get all todo groups
     So that I can view all todo groups.

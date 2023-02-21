@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using MicroTodo.Infra.Persistence;
+using MicroTodo.IntegrationTests.Extensions;
 
 namespace MicroTodo.IntegrationTests.Fixtures
 {
@@ -12,17 +13,10 @@ namespace MicroTodo.IntegrationTests.Fixtures
     {
         protected override IHost CreateHost(IHostBuilder builder)
         {
-            builder.ConfigureServices(services =>
-            {
-                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDbContextFactory<ApplicationDbContext>));
-
-                if (descriptor != null)
-                {
-                    services.Remove(descriptor);
-                }
-
-                services.AddPooledDbContextFactory<ApplicationDbContext>(options => options.UseSqlite($"Data Source=test_MicroTodo_{Guid.NewGuid()}.db"));
-            });
+            builder.ConfigureServices(services => services
+                    .RemoveDbContext()
+                    .AddPooledDbContextFactory<ApplicationDbContext>(options =>
+                        options.UseSqlite($"Data Source=test_MicroTodo_{Guid.NewGuid()}.db")));
 
             return base.CreateHost(builder);
         }

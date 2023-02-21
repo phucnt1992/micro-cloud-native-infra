@@ -1,0 +1,83 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet-postgres
+{
+    "name": "MicroTodo",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils": {},
+        "ghcr.io/devcontainers/features/docker-outside-of-docker": {},
+        "ghcr.io/devcontainers/features/git": {},
+        "ghcr.io/devcontainers/features/github-cli": {},
+        "ghcr.io/devcontainers/features/node": {},
+        "ghcr.io/devcontainers-contrib/features/zsh-plugins": {},
+        "ghcr.io/stuartleeks/dev-container-features/shell-history": {},
+        "ghcr.io/devcontainers/features/java": {}
+    },
+    "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+				"formulahendry.dotnet-test-explorer",
+				"Fudge.auto-using",
+				"ms-dotnettools.csharp",
+				"kreativ-software.csharpextensions",
+				"k--kato.docomment",
+				"streetsidesoftware.code-spell-checker",
+				"CucumberOpen.cucumber-official",
+				"ms-vscode-remote.remote-containers",
+				"ms-azuretools.vscode-docker",
+				"EditorConfig.EditorConfig",
+				"usernamehw.errorlens",
+				"GitHub.copilot",
+				"GitHub.copilot-labs",
+				"GitHub.vscode-pull-request-github",
+				"eamodio.gitlens",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"yzhang.markdown-all-in-one",
+				"bierner.markdown-mermaid",
+				"tintoy.msbuild-project-tools",
+				"christian-kohler.path-intellisense",
+				"jebbs.plantuml",
+				"josefpihrt-vscode.roslynator",
+				"SonarSource.sonarlint-vscode",
+				"hbenl.vscode-test-explorer",
+				"redhat.vscode-yaml",
+				"redhat.vscode-xml",
+				"vscode-icons-team.vscode-icons",
+				"adrianwilczynski.namespace",
+				"ryanluker.vscode-coverage-gutters"
+			]
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [
+        "app:5000",
+        "db:5432",
+        "cache:6379",
+        "storage:1000",
+        "storage:1001",
+        "storage:1002"
+    ],
+    "portsAttributes": {
+        "5000": {
+            "label": "Application"
+        },
+        "5432": {
+            "label": "PostgreSQL"
+        },
+        "6379": {
+            "label": "Redis"
+        },
+        "1000-1002": {
+            "label": "Azurite"
+        }
+    }
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "dotnet --info",
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}
