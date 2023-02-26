@@ -7,16 +7,16 @@ namespace MicroTodo.IntegrationTests.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection RemoveDbContext(this IServiceCollection services)
+    public static IServiceCollection RemoveDbContext<T>(this IServiceCollection services) where T : DbContext
     {
-        var dbContextFactoryDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDbContextFactory<ApplicationDbContext>));
+        var dbContextFactoryDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDbContextFactory<T>));
 
         if (dbContextFactoryDescriptor != null)
         {
             services.Remove(dbContextFactoryDescriptor);
         }
 
-        var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
+        var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<T>));
 
         if (dbContextDescriptor != null)
         {

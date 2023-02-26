@@ -14,8 +14,10 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration =
+
 builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(
-    options => options.UseSqlite("Data Source=MicroTodo.db"));
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddTransient<IApplicationDbContext>(p => p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
 

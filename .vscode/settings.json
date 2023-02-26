@@ -23,7 +23,10 @@
         "devcontainer",
         "Mediat",
         "msbuild",
+        "Npgsql",
         "Serilog",
+        "Testcontainer",
+        "Testcontainers",
         "Xunit"
     ],
     "cSpell.ignorePaths": [

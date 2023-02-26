@@ -36,6 +36,7 @@ public abstract class BaseEndpointSteps
     [BeforeScenario]
     public async Task BeforeScenarioAsync()
     {
+        await _factory.InitializeAsync();
         await using var scope = _factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
 
@@ -52,5 +53,6 @@ public abstract class BaseEndpointSteps
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
 
         await dbContext.Database.EnsureDeletedAsync();
+        await _factory.DisposeAsync();
     }
 }
