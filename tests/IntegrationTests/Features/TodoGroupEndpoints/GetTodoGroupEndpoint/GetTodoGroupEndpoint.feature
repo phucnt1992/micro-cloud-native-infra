@@ -14,3 +14,7 @@ Feature: Get todo group endpoint
     Then the response should contain the todo group detail:
       | Id | Name   |
       |  1 | Marvel |
+
+  Scenario: Get unknown todo group by Id not found
+    When I send a GET request to "/api/todo-groups/999"
+    Then the response status code should be 404

@@ -10,7 +10,7 @@ Feature: update todo group endpoint
       |  2 | DC     |
       |  3 | Anime  |
 
-  Scenario: Update Todo Group
+  Scenario: Update existed Todo Group should return success
     When I send a PUT request to "/api/todo-groups/2" with the following data:
       | Name        |
       | Warner Bros |
@@ -23,3 +23,16 @@ Feature: update todo group endpoint
       |  1 | Marvel      |
       |  2 | Warner Bros |
       |  3 | Anime       |
+    And the modified date should be greater than the created date for updated todo group record
+
+  Scenario: Update unknown todo group should return not found
+    When I send a PUT request to "/api/todo-groups/999" with the following data:
+      | Name        |
+      | Warner Bros |
+    Then the response status code should be 404
+
+  Scenario: Update todo group with empty name should return bad request
+    When I send a PUT request to "/api/todo-groups/2" with the following data:
+      | Name |
+      |      |
+    Then the response status code should be 400

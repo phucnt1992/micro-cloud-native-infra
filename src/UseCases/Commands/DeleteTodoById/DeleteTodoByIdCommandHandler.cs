@@ -21,7 +21,7 @@ public class DeleteTodoByIdCommandHandler : IRequestHandler<DeleteTodoByIdComman
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity is null)
-            throw new EntityNotFoundException(nameof(TodoEntity), request.Id);
+            throw new EntityNotFoundException(nameof(TodoItem), request.Id);
 
         _dbContext.TodoList.Remove(entity);
         await _dbContext.SaveChangesAsync(cancellationToken);

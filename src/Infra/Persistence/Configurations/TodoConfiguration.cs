@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using MicroTodo.Domain.Entities;
 
-class TodoConfiguration : BaseConfiguration<TodoEntity>, IEntityTypeConfiguration<TodoEntity>
+class TodoConfiguration : BaseConfiguration<TodoItem>, IEntityTypeConfiguration<TodoItem>
 {
-    public override void Configure(EntityTypeBuilder<TodoEntity> builder)
+    public override void Configure(EntityTypeBuilder<TodoItem> builder)
     {
         base.Configure(builder);
 

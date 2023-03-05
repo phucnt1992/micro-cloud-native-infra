@@ -7,8 +7,8 @@ using MicroTodo.Infra.Persistence.Configurations;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    public DbSet<TodoEntity> TodoList { get; set; } = null!;
-    public DbSet<TodoGroupEntity> TodoGroups { get; set; } = null!;
+    public DbSet<TodoItem> TodoList { get; set; } = null!;
+    public DbSet<TodoGroup> TodoGroups { get; set; } = null!;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 
+using MicroTodo.Domain.Exceptions;
 using MicroTodo.Infra.Persistence;
 
 namespace MicroTodo.UseCases.Queries;
 
-public class GetTodoGroupDetailByIdQueryHandler : IRequestHandler<GetTodoGroupDetailByIdQuery, TodoGroupEntity>
+public class GetTodoGroupDetailByIdQueryHandler : IRequestHandler<GetTodoGroupDetailByIdQuery, TodoGroup>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -15,10 +16,14 @@ public class GetTodoGroupDetailByIdQueryHandler : IRequestHandler<GetTodoGroupDe
         _dbContext = dbContext;
     }
 
-    public async Task<TodoGroupEntity> Handle(GetTodoGroupDetailByIdQuery request, CancellationToken cancellationToken)
+    public async Task<TodoGroup> Handle(GetTodoGroupDetailByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _dbContext.TodoGroups
+        var todoGroup = await _dbContext.TodoGroups
             .AsNoTracking()
-            .SingleAsync(x => x.Id == request.Id, cancellationToken);
+            .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+        EntityNotFoundException.ThrowIfNull(todoGroup, request.Id);
+
+        return todoGroup;
     }
 }

@@ -5,7 +5,7 @@ using MicroTodo.Infra.Persistence;
 
 namespace MicroTodo.UseCases.Commands;
 
-public class UpdateTodoCommandHandler : IRequestHandler<UpdateTodoCommand, TodoEntity>
+public class UpdateTodoCommandHandler : IRequestHandler<UpdateTodoCommand, TodoItem>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -16,13 +16,13 @@ public class UpdateTodoCommandHandler : IRequestHandler<UpdateTodoCommand, TodoE
         _dbContext = dbContext;
     }
 
-    public async Task<TodoEntity> Handle(UpdateTodoCommand request, CancellationToken cancellationToken)
+    public async Task<TodoItem> Handle(UpdateTodoCommand request, CancellationToken cancellationToken)
     {
         var entity = await _dbContext.TodoList
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity is null)
-            throw new EntityNotFoundException(nameof(TodoEntity), request.Id);
+            throw new EntityNotFoundException(nameof(TodoItem), request.Id);
 
         entity.Title = request.Name;
         entity.State = request.State;

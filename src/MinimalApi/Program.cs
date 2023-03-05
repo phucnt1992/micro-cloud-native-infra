@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+
+using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +15,6 @@ using OpenTelemetry.Trace;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var configuration =
 
 builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
@@ -33,12 +33,24 @@ builder.Services.AddMediatR(typeof(Anchor))
     .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
     .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+builder.Services.AddValidatorsFromAssemblyContaining<Anchor>();
+
+builder.Services.AddProblemDetails();
+
 builder.Host.UseSerilog((context, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
+app.UseExceptionHandler();
+app.UseHsts();
+app.UseStatusCodePages();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 
 app.MapGroup("/api/todo-groups")
     .MapTodoGroupsEndpoints();

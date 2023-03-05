@@ -20,8 +20,7 @@ public class DeleteTodoGroupByIdCommandHandler : IRequestHandler<DeleteTodoGroup
         var entity = await _dbContext.TodoGroups
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        if (entity is null)
-            throw new EntityNotFoundException(nameof(TodoGroupEntity), request.Id);
+        EntityNotFoundException.ThrowIfNull(entity, request.Id);
 
         _dbContext.TodoGroups.Remove(entity);
         await _dbContext.SaveChangesAsync(cancellationToken);

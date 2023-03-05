@@ -31,7 +31,7 @@ public class UpdateTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
         await using var scope = _factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
 
-        var todoGroups = table.Rows.Select(row => new TodoGroupEntity
+        var todoGroups = table.Rows.Select(row => new TodoGroup
         {
             Id = long.Parse(row["Id"]),
             Name = row["Name"]
@@ -49,6 +49,10 @@ public class UpdateTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
 
         var response = await _httpClient.PutAsJsonAsync(url, todoGroup);
 
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        _outputHelper.WriteLine(responseContent);
+
         _scenarioContext.Set(response);
     }
 
@@ -63,15 +67,17 @@ public class UpdateTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
     public async Task ThenTheResponseShouldContainTheUpdatedDetailInJson(Table table)
     {
         var response = _scenarioContext.Get<HttpResponseMessage>();
-        var todoGroup = await response.Content.ReadFromJsonAsync<TodoGroupEntity>();
+        var todoGroup = await response.Content.ReadFromJsonAsync<TodoGroup>();
 
-        todoGroup.Should().BeEquivalentTo(table.CreateInstance<TodoGroupEntity>(),
+        todoGroup.Should().BeEquivalentTo(table.CreateInstance<TodoGroup>(),
             options => options
                 .Excluding(x => x.CreatedOn)
                 .Excluding(x => x.ModifiedOn)
                 .Excluding(x => x.Version)
                 .Excluding(x => x.TodoList)
         );
+
+        _scenarioContext.Set(todoGroup);
     }
 
     [Then("the database should contain the following todo groups in any order:")]
@@ -82,12 +88,20 @@ public class UpdateTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
 
         var actualTodoGroups = await dbContext.TodoGroups.AsNoTracking().ToListAsync();
 
-        actualTodoGroups.Should().BeEquivalentTo(table.CreateSet<TodoGroupEntity>(),
+        actualTodoGroups.Should().BeEquivalentTo(table.CreateSet<TodoGroup>(),
             options => options
                 .Excluding(x => x.CreatedOn)
                 .Excluding(x => x.ModifiedOn)
                 .Excluding(x => x.TodoList)
                 .Excluding(x => x.Version)
         );
+    }
+
+    [Then("the modified date should be greater than the created date for updated todo group record")]
+    public void ThenTheModifiedDateShouldBeGreaterThanTheCreatedDateForEachRecord()
+    {
+        var todoGroup = _scenarioContext.Get<TodoGroup>();
+
+        todoGroup.ModifiedOn.Should().BeAfter(todoGroup.CreatedOn);
     }
 }

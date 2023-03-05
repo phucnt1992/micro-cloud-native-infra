@@ -30,7 +30,7 @@ public class GetAllTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
         using var scope = _factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
 
-        var todoGroups = table.Rows.Select(row => new TodoGroupEntity
+        var todoGroups = table.Rows.Select(row => new TodoGroup
         {
             Id = long.Parse(row["Id"]),
             Name = row["Name"]
@@ -44,7 +44,7 @@ public class GetAllTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
     [When("I send a GET request to {string}")]
     public async Task ISendAGetRequestToUrl(string url)
     {
-        var response = await _httpClient.GetFromJsonAsync<IEnumerable<TodoGroupEntity>>(url);
+        var response = await _httpClient.GetFromJsonAsync<IEnumerable<TodoGroup>>(url);
 
         _scenarioContext.Set(response);
     }
@@ -52,9 +52,9 @@ public class GetAllTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
     [Then("the response should contain the following todo groups in any order:")]
     public void ThenTheResponseShouldContainTheFollowingInAnyOrder(Table table)
     {
-        var response = _scenarioContext.Get<IEnumerable<TodoGroupEntity>>();
+        var response = _scenarioContext.Get<IEnumerable<TodoGroup>>();
 
-        response.Should().BeEquivalentTo(table.CreateSet<TodoGroupEntity>(),
+        response.Should().BeEquivalentTo(table.CreateSet<TodoGroup>(),
             options => options
                 .Excluding(x => x.CreatedOn)
                 .Excluding(x => x.ModifiedOn)

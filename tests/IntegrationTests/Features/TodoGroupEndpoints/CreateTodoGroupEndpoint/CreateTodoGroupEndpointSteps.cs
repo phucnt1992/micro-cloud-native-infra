@@ -61,7 +61,7 @@ public class CreateTodoGroupEndpointSteps : BaseEndpointSteps
             .AsNoTracking()
             .ToListAsync();
 
-        dataSet.Should().BeEquivalentTo(table.CreateSet<TodoGroupEntity>(),
+        dataSet.Should().BeEquivalentTo(table.CreateSet<TodoGroup>(),
             options => options
                 .Excluding(x => x.CreatedOn)
                 .Excluding(x => x.ModifiedOn)

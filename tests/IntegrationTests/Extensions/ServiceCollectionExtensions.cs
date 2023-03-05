@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-using MicroTodo.Infra.Persistence;
-
 namespace MicroTodo.IntegrationTests.Extensions;
 
 public static class ServiceCollectionExtensions

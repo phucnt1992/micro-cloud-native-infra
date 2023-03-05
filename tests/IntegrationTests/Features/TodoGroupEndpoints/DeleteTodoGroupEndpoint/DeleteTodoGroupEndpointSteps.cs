@@ -30,7 +30,7 @@ public class DeleteTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
         await using var scope = _factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
 
-        var todoGroups = table.Rows.Select(row => new TodoGroupEntity
+        var todoGroups = table.Rows.Select(row => new TodoGroup
         {
             Id = long.Parse(row["Id"]),
             Name = row["Name"]
@@ -65,7 +65,7 @@ public class DeleteTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
 
         var todoGroups = dbContext.TodoGroups.ToList();
 
-        todoGroups.Should().BeEquivalentTo(table.CreateSet<TodoGroupEntity>(),
+        todoGroups.Should().BeEquivalentTo(table.CreateSet<TodoGroup>(),
             options => options
                 .Excluding(x => x.CreatedOn)
                 .Excluding(x => x.ModifiedOn)

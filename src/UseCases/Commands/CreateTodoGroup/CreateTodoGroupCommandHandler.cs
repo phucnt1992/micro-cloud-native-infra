@@ -13,7 +13,7 @@ public class CreateTodoGroupCommandHandler : IRequestHandler<CreateTodoGroupComm
 
     public async Task<long> Handle(CreateTodoGroupCommand request, CancellationToken cancellationToken)
     {
-        var todoGroup = new TodoGroupEntity
+        var todoGroup = new TodoGroup
         {
             Name = request.Name,
         };

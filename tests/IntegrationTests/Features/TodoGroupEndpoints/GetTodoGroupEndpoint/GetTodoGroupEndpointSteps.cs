@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 
 using FluentAssertions;
@@ -28,7 +29,7 @@ public class GetTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<TestWe
         using var scope = _factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
 
-        var todoGroups = table.Rows.Select(row => new TodoGroupEntity
+        var todoGroups = table.Rows.Select(row => new TodoGroup
         {
             Id = long.Parse(row["Id"]),
             Name = row["Name"]
@@ -42,17 +43,27 @@ public class GetTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<TestWe
     [When("I send a GET request to {string}")]
     public async Task ISendAGetRequestToUrl(string url)
     {
-        var response = await _httpClient.GetFromJsonAsync<TodoGroupEntity>(url);
+        var response = await _httpClient.GetAsync(url);
 
         _scenarioContext.Set(response);
     }
 
-    [Then("the response should contain the todo group detail:")]
-    public void ThenTheResponseShouldContainTheDetailInJson(Table table)
+    [Then("the response status code should be {int}")]
+    public void ThenTheResponseStatusCodeShouldBe(int statusCode)
     {
-        var response = _scenarioContext.Get<TodoGroupEntity>();
+        var response = _scenarioContext.Get<HttpResponseMessage>();
 
-        response.Should().BeEquivalentTo(table.CreateInstance<TodoGroupEntity>(),
+        response.StatusCode.Should().Be((HttpStatusCode)statusCode);
+    }
+
+    [Then("the response should contain the todo group detail:")]
+    public async Task ThenTheResponseShouldContainTheDetailInJson(Table table)
+    {
+        var response = _scenarioContext.Get<HttpResponseMessage>();
+
+        var todoGroups = await response.Content.ReadFromJsonAsync<TodoGroup>();
+
+        todoGroups.Should().BeEquivalentTo(table.CreateInstance<TodoGroup>(),
             options => options
                 .Excluding(x => x.CreatedOn)
                 .Excluding(x => x.ModifiedOn)

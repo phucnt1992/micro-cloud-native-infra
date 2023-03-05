@@ -12,3 +12,9 @@ Feature: Create todo group endpoint
     And the database contains the following todo groups:
       | Id | Name   |
       |  1 | Marvel |
+
+  Scenario: Create Todo Group with empty name
+    When I send a POST request to "/api/todo-groups" with following data:
+      | Name |
+      |      |
+    Then the response status code should be 400

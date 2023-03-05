@@ -31,7 +31,6 @@ namespace MicroTodo.IntegrationTests.Fixtures
                 })
                 .WithImage("postgres:15-alpine")
                 .WithCleanUp(true)
-                .WithAutoRemove(true)
                 .Build();
         }
 

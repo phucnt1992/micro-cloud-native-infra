@@ -1,5 +1,5 @@
 namespace MicroTodo.UseCases.Queries;
 
-public record GetAllTodoGroupsQuery : IRequest<IEnumerable<TodoGroupEntity>>
+public record GetAllTodoGroupsQuery : IRequest<IEnumerable<TodoGroup>>
 {
 }

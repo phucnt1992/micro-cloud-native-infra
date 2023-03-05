@@ -5,9 +5,9 @@ using MicroTodo.Domain.Entities;
 
 namespace MicroTodo.Infra.Persistence.Configurations;
 
-public class TodoGroupConfiguration : IEntityTypeConfiguration<TodoGroupEntity>
+public class TodoGroupConfiguration : IEntityTypeConfiguration<TodoGroup>
 {
-    public void Configure(EntityTypeBuilder<TodoGroupEntity> builder)
+    public void Configure(EntityTypeBuilder<TodoGroup> builder)
     {
         builder.ToTable("todo_groups");
 

@@ -3,7 +3,7 @@ namespace MicroTodo.UseCases.Queries;
 using Microsoft.EntityFrameworkCore;
 
 using MicroTodo.Infra.Persistence;
-public class GetTodoGroupQueryHandler : IRequestHandler<GetAllTodoGroupsQuery, IEnumerable<TodoGroupEntity>>
+public class GetTodoGroupQueryHandler : IRequestHandler<GetAllTodoGroupsQuery, IEnumerable<TodoGroup>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -14,7 +14,7 @@ public class GetTodoGroupQueryHandler : IRequestHandler<GetAllTodoGroupsQuery, I
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<TodoGroupEntity>> Handle(GetAllTodoGroupsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<TodoGroup>> Handle(GetAllTodoGroupsQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.TodoGroups
             .AsNoTracking()

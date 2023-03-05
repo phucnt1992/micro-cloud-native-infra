@@ -1,5 +1,5 @@
 namespace MicroTodo.Domain.Entities;
-public enum TodoState
+public enum TodoItemState
 {
     NotStarted = 0,
     InProgress = 10,

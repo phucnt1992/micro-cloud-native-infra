@@ -15,7 +15,7 @@ class CreateTodoCommandHandler : IRequestHandler<CreateTodoCommand, long>
 
     public async Task<long> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
-        var todo = new TodoEntity
+        var todo = new TodoItem
         {
             Title = request.Title,
             State = request.State,

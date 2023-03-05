@@ -5,7 +5,7 @@ using MicroTodo.Infra.Persistence;
 
 namespace MicroTodo.UseCases.Commands;
 
-public class UpdateTodoGroupCommandHandler : IRequestHandler<UpdateTodoGroupCommand, TodoGroupEntity>
+public class UpdateTodoGroupCommandHandler : IRequestHandler<UpdateTodoGroupCommand, TodoGroup>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -15,15 +15,16 @@ public class UpdateTodoGroupCommandHandler : IRequestHandler<UpdateTodoGroupComm
         _dbContext = dbContext;
     }
 
-    public async Task<TodoGroupEntity> Handle(UpdateTodoGroupCommand request, CancellationToken cancellationToken)
+    public async Task<TodoGroup> Handle(UpdateTodoGroupCommand request, CancellationToken cancellationToken)
     {
         var entity = await _dbContext.TodoGroups
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        if (entity is null)
-            throw new EntityNotFoundException(nameof(TodoGroupEntity), request.Id);
+        EntityNotFoundException.ThrowIfNull(entity, request.Id);
 
         entity.Name = request.Name;
+
+        entity.ModifiedOn = DateTime.UtcNow;
         entity.Version = Guid.NewGuid();
 
         await _dbContext.SaveChangesAsync(cancellationToken);

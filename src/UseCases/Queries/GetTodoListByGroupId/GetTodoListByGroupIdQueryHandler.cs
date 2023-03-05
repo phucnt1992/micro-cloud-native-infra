@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-
-using MicroTodo.Infra.Persistence;
-
 namespace MicroTodo.UseCases.Queries;
 
-public class GetTodoListByGroupIdQueryHandler : IRequestHandler<GetTodoListByGroupIdQuery, IEnumerable<TodoEntity>>
+using Microsoft.EntityFrameworkCore;
+
+using MicroTodo.Domain.Exceptions;
+using MicroTodo.Infra.Persistence;
+
+public class GetTodoListByGroupIdQueryHandler : IRequestHandler<GetTodoListByGroupIdQuery, IEnumerable<TodoItem>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -15,8 +16,14 @@ public class GetTodoListByGroupIdQueryHandler : IRequestHandler<GetTodoListByGro
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<TodoEntity>> Handle(GetTodoListByGroupIdQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<TodoItem>> Handle(GetTodoListByGroupIdQuery request, CancellationToken cancellationToken)
     {
+        EntityNotFoundException.ThrowIfFalse<TodoGroup>(
+            await _dbContext.TodoGroups
+                .AsNoTracking()
+                .AnyAsync(x => x.Id == request.GroupId, cancellationToken),
+            request.GroupId);
+
         return await _dbContext.TodoList
             .AsNoTracking()
             .Where(x => x.GroupId == request.GroupId)

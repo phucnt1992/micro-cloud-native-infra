@@ -1,10 +1,14 @@
+namespace MicroTodo.MinimalApi.Endpoints;
+
+using FluentValidation;
+
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
+using MicroTodo.MinimalApi.Extensions;
 using MicroTodo.UseCases.Commands;
 using MicroTodo.UseCases.Queries;
-namespace MicroTodo.MinimalApi.Endpoints;
 
 public static class TodoGroupEndpoints
 {
@@ -39,18 +43,32 @@ public static class TodoGroupEndpoints
         [FromServices] IMediator mediator
     )
     {
-        var entity = await mediator.Send(new GetTodoGroupDetailByIdQuery { Id = id });
+        try
+        {
+            var entity = await mediator.Send(new GetTodoGroupDetailByIdQuery { Id = id });
 
-        return TypedResults.Ok(entity);
+            return TypedResults.Ok(entity);
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 
     static async Task<IResult> PostTodoGroup(
         [FromServices] IMediator mediator,
         [FromBody] CreateTodoGroupCommand command)
     {
-        var id = await mediator.Send(command);
+        try
+        {
+            var id = await mediator.Send(command);
 
-        return TypedResults.CreatedAtRoute(id, nameof(GetTodoGroupById), new { id });
+            return TypedResults.CreatedAtRoute(id, nameof(GetTodoGroupById), new { id });
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 
     static async Task<IResult> PutTodoGroup(
@@ -58,9 +76,16 @@ public static class TodoGroupEndpoints
         [FromServices] IMediator mediator,
         [FromBody] UpdateTodoGroupCommand command)
     {
-        var entity = await mediator.Send(command with { Id = id });
+        try
+        {
+            var entity = await mediator.Send(command with { Id = id });
 
-        return TypedResults.Ok(entity);
+            return TypedResults.Ok(entity);
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 
     static async Task<IResult> DeleteTodoGroupById(
@@ -68,9 +93,16 @@ public static class TodoGroupEndpoints
         [FromServices] IMediator mediator
         )
     {
-        await mediator.Send(new DeleteTodoGroupByIdCommand { Id = id });
+        try
+        {
+            await mediator.Send(new DeleteTodoGroupByIdCommand { Id = id });
 
-        return TypedResults.NoContent();
+            return TypedResults.NoContent();
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 
     static async Task<IResult> GetTodoListByTodoGroupId(
