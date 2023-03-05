@@ -40,7 +40,10 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
                 .ToList();
 
             if (failures.Any())
+            {
+                _logger.LogDebug("Validation failed for {TRequestName} with failures: {@Failures}", typeof(TRequest).Name, failures);
                 throw new ValidationException(failures);
+            }
         }
 
         return await next();

@@ -13,19 +13,19 @@ public static class TodoItemEndpoint
 {
     public static RouteGroupBuilder MapTodoItemEndpoints(this RouteGroupBuilder group)
     {
-        group.MapGet("/{id}", GetTodoById)
-            .WithName(nameof(GetTodoById));
+        group.MapGet("/{id}", GetTodoItemById)
+            .WithName(nameof(GetTodoItemById));
 
-        group.MapPost("/", PostTodo);
+        group.MapPost("/", PostTodoItem);
 
-        group.MapPut("/{id}", PutTodo);
+        group.MapPut("/{id}", PutTodoItem);
 
-        group.MapDelete("/{id}", DeleteTodoById);
+        group.MapDelete("/{id}", DeleteTodoItemById);
 
         return group;
     }
 
-    static async Task<IResult> GetTodoById(
+    static async Task<IResult> GetTodoItemById(
         [FromServices] IMediator mediator,
         [FromRoute] long id)
     {
@@ -41,7 +41,7 @@ public static class TodoItemEndpoint
         }
     }
 
-    static async Task<IResult> PostTodo(
+    static async Task<IResult> PostTodoItem(
         [FromServices] IMediator mediator,
         [FromBody] CreateTodoItemCommand command)
     {
@@ -49,7 +49,7 @@ public static class TodoItemEndpoint
         {
             var id = await mediator.Send(command);
 
-            return TypedResults.CreatedAtRoute(id, nameof(GetTodoById), new { id });
+            return TypedResults.CreatedAtRoute(id, nameof(GetTodoItemById), new { id });
         }
         catch (Exception ex)
         {
@@ -57,7 +57,7 @@ public static class TodoItemEndpoint
         }
     }
 
-    static async Task<IResult> PutTodo(
+    static async Task<IResult> PutTodoItem(
         [FromServices] IMediator mediator,
         [FromRoute] long id,
         [FromBody] UpdateTodoItemCommand command)
@@ -74,7 +74,7 @@ public static class TodoItemEndpoint
         }
     }
 
-    static async Task<IResult> DeleteTodoById(
+    static async Task<IResult> DeleteTodoItemById(
         [FromServices] IMediator mediator,
         [FromRoute] long id)
     {

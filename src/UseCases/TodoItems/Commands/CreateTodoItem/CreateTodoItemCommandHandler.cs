@@ -19,7 +19,7 @@ class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, long
         {
             Title = request.Title,
             State = request.State,
-            DueDate = request.DueDate,
+            DueDate = request.DueDate?.ToUniversalTime(),
             GroupId = request.GroupId,
         };
 

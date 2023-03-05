@@ -25,7 +25,7 @@ public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemComman
 
         entity.Title = request.Name;
         entity.State = request.State;
-        entity.DueDate = request.DueDate;
+        entity.DueDate = request.DueDate?.ToUniversalTime();
         entity.GroupId = request.GroupId;
         entity.Version = Guid.NewGuid();
 

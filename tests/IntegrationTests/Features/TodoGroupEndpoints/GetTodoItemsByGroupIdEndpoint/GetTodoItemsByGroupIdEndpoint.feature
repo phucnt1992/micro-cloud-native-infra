@@ -4,11 +4,11 @@ Feature: Get todo items by group id endpoint
     So that I can view all todo items belong to group id.
 
   Background: 
-    Given the following todo groups exist:
+    Given the following todo groups:
       | Id | Name   |
       |  1 | group1 |
       |  2 | group2 |
-    And the following todo items exist:
+    And the following todo items:
       | Id | Title | DueDate    | State      | GroupId |
       |  1 | todo1 | 2022-03-22 | NotStarted |       1 |
       |  2 | todo2 |            | InProgress |       1 |

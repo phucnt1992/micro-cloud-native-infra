@@ -2,6 +2,8 @@ using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 
+using FluentAssertions.Extensions;
+
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +29,7 @@ namespace MicroTodo.IntegrationTests.Fixtures
                     Database = $"test_db_{Guid.NewGuid()}",
                     Username = "postgres",
                     Password = "postgres",
-                    Port = new Random().Next(49152, 65535)
+                    Port = new Random(DateTime.Now.Microsecond).Next(49152, 65535)
                 })
                 .WithImage("postgres:15-alpine")
                 .WithCleanUp(true)

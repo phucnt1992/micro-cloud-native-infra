@@ -1,7 +1,9 @@
+using System.Globalization;
 using System.Net;
 
 using FluentAssertions;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 using MicroTodo.Domain.Entities;
@@ -41,6 +43,32 @@ public class DeleteTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
         await dbContext.SaveChangesAsync(default);
     }
 
+    [Given("the following todo items:")]
+    public async Task GivenTheFollowingTodoItems(Table table)
+    {
+        using var scope = _factory.Services.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+
+        var todoItems = table.Rows.Select(row => new TodoItem
+        {
+            Id = long.Parse(row["Id"]),
+            Title = row["Title"],
+            DueDate = DateTime.TryParse(row["DueDate"], null, DateTimeStyles.AssumeUniversal, out var dueDate)
+                ? dueDate.ToUniversalTime()
+                : null,
+            State = Enum.TryParse<TodoItemState>(row["State"], out var state)
+                ? state
+                : TodoItemState.NotStarted,
+            GroupId = long.TryParse(row["GroupId"], out var groupId)
+                ? groupId
+                : null,
+        })
+        .ToList();
+
+        await dbContext.TodoItems.AddRangeAsync(todoItems);
+        await dbContext.SaveChangesAsync(default);
+    }
+
     [When("I send a DELETE request to {string}")]
     public async Task ISendADeleteRequestToUrl(string url)
     {
@@ -66,6 +94,23 @@ public class DeleteTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<Tes
         var todoGroups = dbContext.TodoGroups.ToList();
 
         todoGroups.Should().BeEquivalentTo(table.CreateSet<TodoGroup>(),
+            options => options
+                .Excluding(x => x.CreatedOn)
+                .Excluding(x => x.ModifiedOn)
+        );
+    }
+
+    [Then("the database should contain the following todo items in any order:")]
+    public async Task ThenTheDatabaseShouldContainTheTodoItem(Table table)
+    {
+        await using var scope = _factory.Services.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+
+        var todoItems = await dbContext.TodoItems
+            .AsNoTracking()
+            .ToListAsync();
+
+        todoItems.Should().BeEquivalentTo(table.CreateSet<TodoItem>(),
             options => options
                 .Excluding(x => x.CreatedOn)
                 .Excluding(x => x.ModifiedOn)

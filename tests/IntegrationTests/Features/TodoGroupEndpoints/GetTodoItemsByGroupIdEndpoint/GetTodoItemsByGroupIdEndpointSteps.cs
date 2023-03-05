@@ -27,8 +27,8 @@ public class GetTodoItemsByGroupIdEndpointSteps : BaseEndpointSteps, IClassFixtu
     {
     }
 
-    [Given("the following todo groups exist:")]
-    public async Task GivenTheFollowingTodoGroupsExistAsync(Table table)
+    [Given("the following todo groups:")]
+    public async Task GivenTheFollowingTodoGroups(Table table)
     {
         using var scope = _factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
@@ -44,8 +44,8 @@ public class GetTodoItemsByGroupIdEndpointSteps : BaseEndpointSteps, IClassFixtu
         await dbContext.SaveChangesAsync(default);
     }
 
-    [Given("the following todo items exist:")]
-    public async Task GivenTheFollowingTodoItemsExistAsync(Table table)
+    [Given("the following todo items:")]
+    public async Task GivenTheFollowingTodoItems(Table table)
     {
         using var scope = _factory.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();

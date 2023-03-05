@@ -10,4 +10,10 @@ public class TodoGroupFaker : Faker<TodoGroup>
     {
         RuleFor(x => x.Name, f => f.Lorem.Sentence());
     }
+
+    public TodoGroupFaker WithId(long id)
+    {
+        RuleFor(x => x.Id, _ => id);
+        return this;
+    }
 }
