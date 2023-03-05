@@ -7,8 +7,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using MicroTodo.MinimalApi.Extensions;
-using MicroTodo.UseCases.Commands;
-using MicroTodo.UseCases.Queries;
+using MicroTodo.UseCases.TodoGroups.Commands;
+using MicroTodo.UseCases.TodoGroups.Queries;
+using MicroTodo.UseCases.TodoItems.Queries;
 
 public static class TodoGroupEndpoints
 {
@@ -33,7 +34,7 @@ public static class TodoGroupEndpoints
     static async Task<IResult> GetAllTodoGroups(
         [FromServices] IMediator mediator)
     {
-        var todoGroups = await mediator.Send(new GetAllTodoGroupsQuery());
+        var todoGroups = await mediator.Send(new GetTodoGroupsQuery());
 
         return TypedResults.Ok(todoGroups);
     }
@@ -45,7 +46,7 @@ public static class TodoGroupEndpoints
     {
         try
         {
-            var entity = await mediator.Send(new GetTodoGroupDetailByIdQuery { Id = id });
+            var entity = await mediator.Send(new GetTodoGroupByIdQuery { Id = id });
 
             return TypedResults.Ok(entity);
         }
@@ -110,7 +111,7 @@ public static class TodoGroupEndpoints
         [FromServices] IMediator mediator
     )
     {
-        var todoList = await mediator.Send(new GetTodoListByGroupIdQuery { GroupId = id });
+        var todoList = await mediator.Send(new GetTodoItemsByGroupIdQuery { GroupId = id });
 
         return TypedResults.Ok(todoList);
     }

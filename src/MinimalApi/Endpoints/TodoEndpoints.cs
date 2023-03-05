@@ -2,8 +2,9 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-using MicroTodo.UseCases.Commands;
-using MicroTodo.UseCases.Queries;
+using MicroTodo.UseCases.TodoGroups.Queries;
+using MicroTodo.UseCases.TodoItems.Commands;
+
 namespace MicroTodo.MinimalApi.Endpoints;
 
 public static class TodoEndpoint
@@ -26,14 +27,14 @@ public static class TodoEndpoint
         [FromServices] IMediator mediator,
         [FromRoute] long id)
     {
-        var todo = await mediator.Send(new GetTodoGroupDetailByIdQuery { Id = id });
+        var todo = await mediator.Send(new GetTodoGroupByIdQuery { Id = id });
 
         return TypedResults.Ok(todo);
     }
 
     static async Task<IResult> PostTodo(
         [FromServices] IMediator mediator,
-        [FromBody] CreateTodoCommand command)
+        [FromBody] CreateTodoItemCommand command)
     {
         var id = await mediator.Send(command);
 
@@ -43,7 +44,7 @@ public static class TodoEndpoint
     static async Task<IResult> PutTodo(
         [FromServices] IMediator mediator,
         [FromRoute] long id,
-        [FromBody] UpdateTodoCommand command)
+        [FromBody] UpdateTodoItemCommand command)
     {
         var entity = await mediator.Send(command with { Id = id });
 
@@ -54,7 +55,7 @@ public static class TodoEndpoint
         [FromServices] IMediator mediator,
         [FromRoute] long id)
     {
-        await mediator.Send(new DeleteTodoByIdCommand { Id = id });
+        await mediator.Send(new DeleteTodoItemByIdCommand { Id = id });
 
         return TypedResults.NoContent();
     }

@@ -10,7 +10,7 @@ using MicroTodo.Domain.Entities;
 using MicroTodo.Infra.Persistence;
 using MicroTodo.IntegrationTests.Fixtures;
 using MicroTodo.IntegrationTests.Steps;
-using MicroTodo.UseCases.Commands;
+using MicroTodo.UseCases.TodoGroups.Commands;
 
 using TechTalk.SpecFlow.Assist;
 

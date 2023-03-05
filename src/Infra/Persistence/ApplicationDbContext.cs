@@ -7,7 +7,7 @@ using MicroTodo.Infra.Persistence.Configurations;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    public DbSet<TodoItem> TodoList { get; set; } = null!;
+    public DbSet<TodoItem> TodoItems { get; set; } = null!;
     public DbSet<TodoGroup> TodoGroups { get; set; } = null!;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -16,7 +16,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new TodoConfiguration());
+        modelBuilder.ApplyConfiguration(new TodoItemConfiguration());
         modelBuilder.ApplyConfiguration(new TodoGroupConfiguration());
     }
 }
