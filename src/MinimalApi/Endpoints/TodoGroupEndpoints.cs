@@ -13,9 +13,9 @@ using MicroTodo.UseCases.TodoItems.Queries;
 
 public static class TodoGroupEndpoints
 {
-    public static RouteGroupBuilder MapTodoGroupsEndpoints(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapTodoGroupEndpoints(this RouteGroupBuilder group)
     {
-        group.MapGet("/", GetAllTodoGroups);
+        group.MapGet("/", GetTodoGroups);
 
         group.MapGet("/{id}", GetTodoGroupById)
             .WithName(nameof(GetTodoGroupById));
@@ -26,12 +26,12 @@ public static class TodoGroupEndpoints
 
         group.MapDelete("/{id}", DeleteTodoGroupById);
 
-        group.MapGet("/{id}/todo", GetTodoListByTodoGroupId);
+        group.MapGet("/{id}/items", GetTodoItemsByTodoGroupId);
 
         return group;
     }
 
-    static async Task<IResult> GetAllTodoGroups(
+    static async Task<IResult> GetTodoGroups(
         [FromServices] IMediator mediator)
     {
         var todoGroups = await mediator.Send(new GetTodoGroupsQuery());
@@ -106,13 +106,20 @@ public static class TodoGroupEndpoints
         }
     }
 
-    static async Task<IResult> GetTodoListByTodoGroupId(
+    static async Task<IResult> GetTodoItemsByTodoGroupId(
         [FromRoute] long id,
         [FromServices] IMediator mediator
     )
     {
-        var todoList = await mediator.Send(new GetTodoItemsByGroupIdQuery { GroupId = id });
+        try
+        {
+            var todoItems = await mediator.Send(new GetTodoItemsByGroupIdQuery { GroupId = id });
 
-        return TypedResults.Ok(todoList);
+            return TypedResults.Ok(todoItems);
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 }

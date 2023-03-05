@@ -53,10 +53,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGroup("/api/todo-groups")
-    .MapTodoGroupsEndpoints();
+    .MapTodoGroupEndpoints();
 
-app.MapGroup("/api/todo")
-    .MapTodoEndpoints();
+app.MapGroup("/api/todo-items")
+    .MapTodoItemEndpoints();
 
 app.Run();
 

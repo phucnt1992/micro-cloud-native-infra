@@ -14,9 +14,9 @@ using TechTalk.SpecFlow.Assist;
 namespace MicroTodo.IntegrationTests.Features.TodoGroupEndpoints;
 
 [Binding, Scope(Feature = "get all todo group endpoint")]
-public class GetAllTodoGroupEndpointSteps : BaseEndpointSteps, IClassFixture<TestWebApplicationFactory<Program>>
+public class GetTodoGroupsEndpointSteps : BaseEndpointSteps, IClassFixture<TestWebApplicationFactory<Program>>
 {
-    public GetAllTodoGroupEndpointSteps(
+    public GetTodoGroupsEndpointSteps(
         ScenarioContext scenarioContext,
         TestWebApplicationFactory<Program> factory,
         ISpecFlowOutputHelper outputHelper

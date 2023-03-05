@@ -7,9 +7,9 @@ using MicroTodo.UseCases.TodoItems.Commands;
 
 namespace MicroTodo.MinimalApi.Endpoints;
 
-public static class TodoEndpoint
+public static class TodoItemEndpoint
 {
-    public static RouteGroupBuilder MapTodoEndpoints(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapTodoItemEndpoints(this RouteGroupBuilder group)
     {
         group.MapGet("/{id}", GetTodoById)
             .WithName(nameof(GetTodoById));

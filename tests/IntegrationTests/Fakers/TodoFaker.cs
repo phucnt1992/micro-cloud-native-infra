@@ -12,4 +12,10 @@ public class TodoFaker : Faker<TodoItem>
         RuleFor(x => x.State, f => f.PickRandom<TodoItemState>());
         RuleFor(x => x.DueDate, f => f.Date.Future());
     }
+
+    public TodoFaker WithGroupId(long groupId)
+    {
+        RuleFor(x => x.GroupId, _ => groupId);
+        return this;
+    }
 }
