@@ -1,9 +1,9 @@
 Feature: Delete todo group endpoint
-  As an endd user
+  As an end user
   I want to delete a todo group
   So that I can remove an unused todo group
 
-  Background: 
+  Background:
     Given the following todo groups:
       | Id | Name   |
       |  1 | Marvel |

@@ -2,8 +2,10 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
+using MicroTodo.MinimalApi.Extensions;
 using MicroTodo.UseCases.TodoGroups.Queries;
 using MicroTodo.UseCases.TodoItems.Commands;
+using MicroTodo.UseCases.TodoItems.Queries;
 
 namespace MicroTodo.MinimalApi.Endpoints;
 
@@ -27,18 +29,32 @@ public static class TodoItemEndpoint
         [FromServices] IMediator mediator,
         [FromRoute] long id)
     {
-        var todo = await mediator.Send(new GetTodoGroupByIdQuery { Id = id });
+        try
+        {
+            var todo = await mediator.Send(new GetTodoItemByIdQuery { Id = id });
 
-        return TypedResults.Ok(todo);
+            return TypedResults.Ok(todo);
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 
     static async Task<IResult> PostTodo(
         [FromServices] IMediator mediator,
         [FromBody] CreateTodoItemCommand command)
     {
-        var id = await mediator.Send(command);
+        try
+        {
+            var id = await mediator.Send(command);
 
-        return TypedResults.CreatedAtRoute(id, nameof(GetTodoById), new { id });
+            return TypedResults.CreatedAtRoute(id, nameof(GetTodoById), new { id });
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 
     static async Task<IResult> PutTodo(
@@ -46,17 +62,31 @@ public static class TodoItemEndpoint
         [FromRoute] long id,
         [FromBody] UpdateTodoItemCommand command)
     {
-        var entity = await mediator.Send(command with { Id = id });
+        try
+        {
+            var entity = await mediator.Send(command with { Id = id });
 
-        return TypedResults.Ok(entity);
+            return TypedResults.Ok(entity);
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 
     static async Task<IResult> DeleteTodoById(
         [FromServices] IMediator mediator,
         [FromRoute] long id)
     {
-        await mediator.Send(new DeleteTodoItemByIdCommand { Id = id });
+        try
+        {
+            await mediator.Send(new DeleteTodoItemByIdCommand { Id = id });
 
-        return TypedResults.NoContent();
+            return TypedResults.NoContent();
+        }
+        catch (Exception ex)
+        {
+            return ex.ToProblem();
+        }
     }
 }
