@@ -29,7 +29,7 @@ namespace MicroTodo.IntegrationTests.Fixtures
                     Database = $"test_db_{Guid.NewGuid()}",
                     Username = "postgres",
                     Password = "postgres",
-                    Port = new Random(DateTime.Now.Microsecond).Next(49152, 65535)
+                    Port = new Random(Guid.NewGuid().GetHashCode()).Next(49152, 65535)
                 })
                 .WithImage("postgres:15-alpine")
                 .WithCleanUp(true)

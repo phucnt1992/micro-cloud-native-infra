@@ -25,7 +25,7 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
     {
         if (_validators.Any())
         {
-            _logger.LogDebug("Validating {TRequestName} with {@TValidator}", typeof(TRequest).Name, _validators);
+            _logger.LogDebug("Validating {TRequestName} with {@TValidator}", typeof(TRequest).Name, _validators.Select(r => r.GetType().Name));
 
             var context = new ValidationContext<TRequest>(request);
 
