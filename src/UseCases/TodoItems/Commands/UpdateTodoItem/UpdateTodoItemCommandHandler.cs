@@ -23,7 +23,7 @@ public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemComman
 
         EntityNotFoundException.ThrowIfNull(entity, request.Id);
 
-        entity.Title = request.Name;
+        entity.Title = request.Title;
         entity.State = request.State;
         entity.DueDate = request.DueDate?.ToUniversalTime();
         entity.GroupId = request.GroupId;

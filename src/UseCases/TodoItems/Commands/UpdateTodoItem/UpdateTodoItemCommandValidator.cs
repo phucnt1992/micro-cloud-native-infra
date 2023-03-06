@@ -16,8 +16,8 @@ public class UpdateTodoItemCommandValidator : AbstractValidator<UpdateTodoItemCo
         _dbContext = dbContext;
 
         RuleFor(x => x.Id).NotEmpty();
-        RuleFor(x => x.Name).NotEmpty();
-        RuleFor(x => x.State).NotEmpty();
+        RuleFor(x => x.Title).NotEmpty();
+        RuleFor(x => x.State).NotNull();
         RuleFor(x => x.GroupId)
             .MustAsync(async (id, cancellationToken) =>
                 id is null ||
