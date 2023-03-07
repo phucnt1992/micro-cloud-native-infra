@@ -2,8 +2,6 @@ using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 
-using FluentAssertions.Extensions;
-
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,8 +60,8 @@ namespace MicroTodo.IntegrationTests.Fixtures
                 .WaitAndRetryAsync(new[]
                 {
                     TimeSpan.FromSeconds(1),
-                    TimeSpan.FromSeconds(2),
-                    TimeSpan.FromSeconds(3)
+                    TimeSpan.FromSeconds(3),
+                    TimeSpan.FromSeconds(6)
                 });
 
             await policy.ExecuteAsync(_container.StartAsync, default);
