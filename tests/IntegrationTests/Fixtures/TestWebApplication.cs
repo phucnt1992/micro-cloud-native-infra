@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 
 using MicroTodo.Infra.Persistence;
 using MicroTodo.IntegrationTests.Extensions;
+
+using Polly;
+
 namespace MicroTodo.IntegrationTests.Fixtures
 {
     public class TestWebApplicationFactory<TProgram>
@@ -54,7 +57,16 @@ namespace MicroTodo.IntegrationTests.Fixtures
 
         public async Task InitializeAsync()
         {
-            await _container.StartAsync();
+            var policy = Policy
+                .Handle<AggregateException>()
+                .WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(2),
+                    TimeSpan.FromSeconds(3)
+                });
+
+            await policy.ExecuteAsync(_container.StartAsync, default);
         }
     }
 }
