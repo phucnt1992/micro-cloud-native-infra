@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-using FluentValidation;
+﻿using FluentValidation;
 
 using MediatR;
 
@@ -19,7 +17,9 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(
-    options => options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+    options => options
+        .UseNpgsql(builder.Configuration.GetConnectionString("Default"), dbOptions => dbOptions
+            .EnableRetryOnFailure(5)));
 
 builder.Services.AddTransient<IApplicationDbContext>(p => p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
 

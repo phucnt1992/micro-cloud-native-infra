@@ -1,0 +1,32 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+    description: The auto-generated id of the todo group
+  title:
+    type: string
+    description: The name of the todo group
+  dueDate:
+    type: string
+    format: date-time
+    description: The due date to finish todo item
+  state:
+    type: string
+    description: The state of the todo item
+    enum:
+      - notStarted
+      - inProgress
+      - completed
+  groupId:
+    type: integer
+    format: int64
+    description: The id of the todo group
+  createdOn:
+    type: string
+    format: date-time
+    description: The date and time when the todo group was created
+  modifiedOn:
+    type: string
+    format: date-time
+    description: The date and time when the todo group was last updated
