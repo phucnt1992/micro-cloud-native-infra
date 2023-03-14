@@ -1,0 +1,4 @@
+NotFoundError:
+  $ref: "./NotFoundError.yml"
+BadRequestError:
+  $ref: "./BadRequestError.yml"

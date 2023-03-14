@@ -1,0 +1,4 @@
+ProblemDetail:
+  $ref: "./ProblemDetail.yml"
+TodoGroup:
+  $ref: "./TodoGroup.yml"

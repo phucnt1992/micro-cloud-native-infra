@@ -1,0 +1,16 @@
+openapi: 3.1.0
+info:
+  version: 0.0.1
+  title: MicroTodo
+  description: MicroTodo API for OpenAPI Specification
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://127.0.0.1:5000
+    description: Local server
+
+paths:
+  /todo-groups:
+    $ref: ./components/resources/TodoGroups.yml

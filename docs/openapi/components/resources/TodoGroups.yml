@@ -1,0 +1,41 @@
+get:
+  summary: Get all todo groups
+  operationId: getTodoGroups
+  tags:
+    - todoGroups
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/TodoGroup.yml"
+              
+post:
+  summary: Create a todo group
+  operationId: createTodoGroup
+  tags:
+    - todoGroups
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/TodoGroup.yml"
+  responses:
+    "201":
+      description: Created
+      headers:
+        Location:
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/TodoGroup.yml"
+    "400":
+      $ref: ../responses/BadRequestError.yml
+    "500":
+      $ref: ../responses/InternalServerError.yml

@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using MicroTodo.MinimalApi.Extensions;
-using MicroTodo.UseCases.TodoGroups.Queries;
 using MicroTodo.UseCases.TodoItems.Commands;
 using MicroTodo.UseCases.TodoItems.Queries;
 

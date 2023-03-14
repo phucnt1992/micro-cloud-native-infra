@@ -49,7 +49,10 @@
 				"redhat.vscode-xml",
 				"vscode-icons-team.vscode-icons",
 				"adrianwilczynski.namespace",
-				"ryanluker.vscode-coverage-gutters"
+				"ryanluker.vscode-coverage-gutters",
+				"pflannery.vscode-versionlens",
+				"Arjun.swagger-viewer",
+				"Redocly.openapi-vs-code"
 			]
         }
     },
