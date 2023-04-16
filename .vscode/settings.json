@@ -21,6 +21,7 @@
     ],
     "cSpell.words": [
         "devcontainer",
+        "fluentui",
         "headlessui",
         "heroicons",
         "Hsts",
@@ -50,5 +51,7 @@
         "projectKey": "phucnt1992_micro-cloud-native-infra"
     },
     "dotnet-test-explorer.testArguments": "--collect:\"XPlat Code Coverage\"",
-    "yaml.schemas": {}
+    "yaml.schemas": {},
+    "dotenv.enableAutocloaking": false,
+    "jest.autoRun": "off",
 }

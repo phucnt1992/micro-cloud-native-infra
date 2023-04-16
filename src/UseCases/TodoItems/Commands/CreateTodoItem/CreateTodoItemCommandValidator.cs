@@ -21,9 +21,9 @@ public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCo
         RuleFor(x => x.GroupId)
             .MustAsync(async (id, cancellationToken) =>
                 id is null ||
-                await _dbContext.TodoGroups
+                (id > 0 && await _dbContext.TodoGroups
                     .AsNoTracking()
-                    .AnyAsync(x => x.Id == id, cancellationToken))
-            .WithMessage("The todo group does not exist.");
+                    .AnyAsync(x => x.Id == id, cancellationToken)))
+            .WithMessage(Constants.TodoGroupIdDoesNotExist);
     }
 }

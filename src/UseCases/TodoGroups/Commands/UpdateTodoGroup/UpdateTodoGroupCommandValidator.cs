@@ -6,6 +6,10 @@ public class UpdateTodoGroupCommandValidator : AbstractValidator<UpdateTodoGroup
 {
     public UpdateTodoGroupCommandValidator()
     {
-        RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Id)
+            .GreaterThan(0);
+
+        RuleFor(x => x.Name)
+            .NotEmpty();
     }
 }
