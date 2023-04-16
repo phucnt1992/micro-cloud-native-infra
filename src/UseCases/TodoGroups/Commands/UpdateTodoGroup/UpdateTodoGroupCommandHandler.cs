@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using MicroTodo.Domain.Exceptions;
 using MicroTodo.Infra.Persistence;
 
-
 public class UpdateTodoGroupCommandHandler : IRequestHandler<UpdateTodoGroupCommand, TodoGroup>
 {
     private readonly IApplicationDbContext _dbContext;

@@ -21,12 +21,18 @@
     ],
     "cSpell.words": [
         "devcontainer",
+        "fluentui",
+        "headlessui",
+        "heroicons",
         "Hsts",
         "Mediat",
         "Middlewares",
         "msbuild",
         "Npgsql",
+        "openapi",
         "Serilog",
+        "stailwc",
+        "tailwindcss",
         "Testcontainer",
         "Testcontainers",
         "Xunit"
@@ -44,5 +50,8 @@
         "connectionId": "phucnt1992",
         "projectKey": "phucnt1992_micro-cloud-native-infra"
     },
-    "dotnet-test-explorer.testArguments": "--collect:\"XPlat Code Coverage\""
+    "dotnet-test-explorer.testArguments": "--collect:\"XPlat Code Coverage\"",
+    "yaml.schemas": {},
+    "dotenv.enableAutocloaking": false,
+    "jest.autoRun": "off",
 }

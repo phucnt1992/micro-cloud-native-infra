@@ -29,6 +29,7 @@
     <PackageReference Include="FluentAssertions" Version="6.*" />
     <PackageReference Include="Testcontainers" Version="2.*" />
     <PackageReference Include="Bogus" Version="34.*" />
+    <PackageReference Include="Polly" Version="7.*" />
   </ItemGroup>
 
   <ItemGroup>

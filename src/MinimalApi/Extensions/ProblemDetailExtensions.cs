@@ -9,7 +9,6 @@ namespace MicroTodo.MinimalApi.Extensions;
 
 public static class ProblemDetailExtensions
 {
-
     public static ProblemHttpResult ToNotFoundProblem(this EntityNotFoundException exception)
         => TypedResults.Problem(exception.Message, statusCode: StatusCodes.Status404NotFound);
 

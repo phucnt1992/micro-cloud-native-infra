@@ -1,0 +1,24 @@
+# See https://redocly.com/docs/cli/configuration/
+
+apis:
+  # Update the apiName with your actual API name, and the version with your actual API version.
+  apiName@version:
+    # Update the path to your OpenAPI root file
+    root: ./docs/openapi/openapi.yaml
+
+extends:
+  - recommended
+
+rules:
+  # A sample custom rule. Read more about rules: https://redocly.com/docs/cli/rules/
+  security-defined:
+    severity: off
+
+theme:
+  openapi:
+    generateCodeSamples:
+      languages:
+        - lang: curl
+        - lang: Node.js
+        - lang: Python
+        - lang: C#

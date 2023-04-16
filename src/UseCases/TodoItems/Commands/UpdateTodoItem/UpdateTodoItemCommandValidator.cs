@@ -15,15 +15,21 @@ public class UpdateTodoItemCommandValidator : AbstractValidator<UpdateTodoItemCo
         ArgumentNullException.ThrowIfNull(dbContext);
         _dbContext = dbContext;
 
-        RuleFor(x => x.Id).NotEmpty();
-        RuleFor(x => x.Title).NotEmpty();
-        RuleFor(x => x.State).NotNull();
+        RuleFor(x => x.Id)
+            .GreaterThan(0);
+
+        RuleFor(x => x
+            .Title).NotEmpty();
+
+        RuleFor(x => x
+            .State).NotNull();
+
         RuleFor(x => x.GroupId)
             .MustAsync(async (id, cancellationToken) =>
                 id is null ||
-                await _dbContext.TodoGroups
+                (id > 0 && await _dbContext.TodoGroups
                     .AsNoTracking()
-                    .AnyAsync(x => x.Id == id, cancellationToken))
-            .WithMessage("The todo group does not exist.");
+                    .AnyAsync(x => x.Id == id, cancellationToken)))
+            .WithMessage(Constants.TodoGroupIdDoesNotExist);
     }
 }
